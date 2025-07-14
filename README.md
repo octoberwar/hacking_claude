@@ -5,6 +5,9 @@ A Python command-line interface application with testing and CI/CD setup.
 ## Features
 
 - Command-line argument parsing
+- Fetch HackerOne reports via API
+- JSON output to stdout
+- Save JSON results to file automatically
 - Verbose output mode
 - Version information
 - Comprehensive test suite
@@ -42,16 +45,24 @@ python-cli-app
 
 - `--version`: Show version information
 - `--verbose, -v`: Enable verbose output
+- `--report REPORT, -r REPORT`: Report ID to fetch from HackerOne (required)
+- `--output OUTPUT, -o OUTPUT`: Output file path to save JSON result
 - `--help, -h`: Show help message
 
 ### Examples
 
 ```bash
-# Basic usage
-python app/main.py
+# Fetch a report and display JSON to stdout
+python app/main.py --report 123456
 
-# Verbose mode
-python app/main.py --verbose
+# Fetch a report with verbose output
+python app/main.py --verbose --report 123456
+
+# Fetch a report and save to JSON file
+python app/main.py --report 123456 --output report_123456.json
+
+# Fetch a report, save to file, and show verbose output
+python app/main.py --verbose --report 123456 --output report_123456.json
 
 # Show version
 python app/main.py --version
