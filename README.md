@@ -5,6 +5,8 @@ A Python command-line interface application with testing and CI/CD setup.
 ## Features
 
 - Command-line argument parsing
+- List available issues/reports from HackerOne
+- Fetch specific reports by ID  
 - Verbose output mode
 - Version information
 - Comprehensive test suite
@@ -42,16 +44,27 @@ python-cli-app
 
 - `--version`: Show version information
 - `--verbose, -v`: Enable verbose output
+- `--report REPORT, -r REPORT`: Fetch a specific report by ID
+- `--list, -l`: List available issues/reports
 - `--help, -h`: Show help message
 
 ### Examples
 
 ```bash
-# Basic usage
+# Basic usage (shows help)
 python app/main.py
 
-# Verbose mode
-python app/main.py --verbose
+# List available issues
+python app/main.py --list
+
+# List issues with verbose output
+python app/main.py --list --verbose
+
+# Fetch a specific report
+python app/main.py --report 123456
+
+# Verbose mode with report fetching
+python app/main.py --verbose --report 123456
 
 # Show version
 python app/main.py --version
