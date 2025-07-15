@@ -27,7 +27,12 @@ def main():
     parser.add_argument(
         "--report",
         "-r",
-        help="Enable verbose output"
+        help="Report ID to fetch from HackerOne"
+    )
+    parser.add_argument(
+        "--output",
+        "-o",
+        help="Output file path to save JSON result"
     )
     
     args = parser.parse_args()
@@ -38,7 +43,22 @@ def main():
 
     res = requests.get(f'https://hackerone.com/reports/{args.report}.json')
     if res.status_code == 200:
-        print(json.dumps(res.json(),indent=2))
+        json_data = res.json()
+        formatted_json = json.dumps(json_data, indent=2)
+        
+        if args.output:
+            # Save to file
+            try:
+                with open(args.output, 'w', encoding='utf-8') as f:
+                    f.write(formatted_json)
+                if verbose:
+                    print(f"JSON report saved to: {args.output}")
+            except IOError as e:
+                print(f"Error saving file: {e}")
+                return 1
+        else:
+            # Print to stdout (existing behavior)
+            print(formatted_json)
     else:
         print("Failed to fetch report")
         if verbose:
