@@ -29,7 +29,13 @@ def main():
         "-r",
         help="Enable verbose output"
     )
+
     
+    parser.add_argument(
+        "--store",
+        "-s",
+        help="Store result in json file"
+    )
     args = parser.parse_args()
     
     verbose = args.verbose or os.environ.get("VERBOSE")
@@ -39,6 +45,9 @@ def main():
     res = requests.get(f'https://hackerone.com/reports/{args.report}.json')
     if res.status_code == 200:
         print(json.dumps(res.json(),indent=2))
+        if  args.store:
+            with open("res.json") as f:
+                f.write(json.dumps(res.json(),indent=2))
     else:
         print("Failed to fetch report")
         if verbose:
